@@ -1,0 +1,15 @@
+import { PaginationCollection } from "../../../../shared/domain/PaginationCollection";
+import { PaginationOptions } from "../../../../shared/domain/PaginationOptions";
+import { ResponseSuccess } from "../../../../shared/domain/ResponseSuccess";
+import { Create{{domain_name}} } from "../entities/Create{{domain_name}}";
+import { Detail{{domain_name}} } from "../entities/Detail{{domain_name}}";
+import { Update{{domain_name}} } from "../entities/Update{{domain_name}}";
+
+export interface {{domain_name}}RepositoryContract 
+{
+	list: (data: PaginationOptions) => Promise<PaginationCollection<Detail{{domain_name}}>>;
+    create: (data: Create{{domain_name}}) => Promise<ResponseSuccess>;
+    detail: ({{key_name}}:{{key_type}}) => Promise<Detail{{domain_name}}>;
+    update: ({{key_name}}:{{key_type}}, data: Update{{domain_name}}) => Promise<ResponseSuccess>;
+    destroy: ({{key_name}}:{{key_type}}) => Promise<ResponseSuccess>;
+}

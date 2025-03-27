@@ -1,0 +1,5 @@
+import { User } from "./{{domain_name}}";
+
+export interface Detail{{domain_name}} extends {{domain_name}}{
+    {{key_name}}: {{key_type}}
+}

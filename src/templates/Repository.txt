@@ -1,0 +1,96 @@
+import { PaginationCollection } from "../../../shared/domain/PaginationCollection";
+import { PaginationOptions } from "../../../shared/domain/PaginationOptions";
+import { ResponseFailure } from "../../../shared/domain/ResponseFailure";
+import { ResponseSuccess } from "../../../shared/domain/ResponseSuccess";
+import { {{domain_name}}RepositoryContract } from "../domain/contracts/{{domain_name}}RepositoryContract";
+import { Detail{{domain_name}} } from "../domain/entities/Detail{{domain_name}}";
+import { List{{domain_name}} } from "../domain/entities/List{{domain_name}}";
+import { Update{{domain_name}} } from "../domain/entities/Update{{domain_name}}";
+
+export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
+
+	async function list(data: PaginationOptions): Promise<PaginationCollection<List{{domain_name}}>> {
+		return new Promise(async (resolve, reject) => {
+			const urlParams = new URLSearchParams(data).toString();
+			const response = await fetch(`${urlParams}`,{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			});
+			if(response.ok){
+				resolve(await response.json() as PaginationCollection<List{{domain_name}}>);
+			}else{
+				reject( await response.json() as ResponseFailure);
+			}
+		});
+	}
+
+	
+
+	async function detail( {{key_name}}: {{key_type}} ): Promise<Detail{{domain_name}}> {
+		return new Promise(async (resolve, reject) => {
+			const response = await fetch(``,{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			});
+			if(response.ok){
+				resolve(await response.json() as Detail{{domain_name}});
+			}else{
+				reject( await response.json() as ResponseFailure);
+			}
+		});
+	}
+
+
+	async function update({{key_name}}: {{key_type}}, data: Update{{domain_name}}): Promise<ResponseSuccess> {
+		return new Promise(async (resolve, reject) => {
+			const response = await fetch(``,{
+				method: 'PUT',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+				body: JSON.stringify(data),
+			});
+			if(response.ok){
+				resolve(await response.json() as ResponseSuccess);
+			}else{
+				reject( await response.json() as ResponseFailure);
+			}
+		});
+	}
+
+	async function destroy({{key_name}}: {{key_type}}): Promise<ResponseSuccess> {
+		return new Promise(async (resolve, reject) => {
+			const response = await fetch(``,{
+				method: 'DELETE',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			});
+			if(response.ok){
+				resolve(await response.json() as ResponseSuccess);
+			}else{
+				reject( await response.json() as ResponseFailure);
+			}
+		});
+	}
+   
+
+	return {
+		list,
+		update,
+		detail,
+		destroy,
+	};
+}

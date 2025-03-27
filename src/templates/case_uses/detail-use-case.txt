@@ -1,0 +1,8 @@
+import { DetailUser } from "../../domain/entities/Detail{{domain_name}}";
+import { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
+
+export function Detail{{domain_name}}UseCase (repository: {{domain_name}}RepositoryContract) {
+	return async ({{key_name}}: {{key_type}}): Promise<Detail{{domain_name}}> => {
+		return await repository.detail({{key_name}});
+	};
+}
