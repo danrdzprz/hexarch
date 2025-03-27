@@ -1,2 +1,2 @@
 # hexarch
-Herarch is an hexagonal architecture generator for vue.
+Hexarch is an hexagonal architecture generator for vue.
