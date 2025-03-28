@@ -1,0 +1,62 @@
+import { defineStore } from 'pinia';
+import { useCaseList{{domain_name}}s } from '~/data/modules/chat-rooms/application/use-case-list';
+import type { Detail{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
+import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
+import type { PaginationDomain } from '~/data/modules/shared/domain/Pagination';
+import type { PaginationOptionsDomain } from '~/data/modules/shared/domain/PaginationOptions';
+import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
+
+export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
+      state: ():{status: RequestStatus, data: PaginationDomain<Detail{{domain_name}}Domain>, list: Detail{{domain_name}}Domain[]}=> {
+        return {
+          status:RequestStatus.INITIAL,
+          data:{
+            data: [],
+            total: 0,
+            total_pages: 0,
+            current_page: 0,
+            previous_page: null,
+            next_page: null
+          },
+          list:[]
+        }
+      },
+      getters: {
+        get_status: (state):RequestStatus => state.status,
+      },
+      actions: {
+        appendToList(data: Detail{{domain_name}}Domain){
+          const index = this.list.findIndex( (element, x )=> element._id===data._id);
+          if (index < 0) {
+            this.list = [data,...this.list];
+          }
+        },
+        remove(id: string){
+          const index = this.list.findIndex( (element, x )=> element._id===id);
+          if (index > -1) {
+            this.list.splice(index, 1);
+          }else{
+            // this.list.push(item);
+          }
+
+          // this.list = [data,...this.list];
+        },
+        async getList(data: PaginationOptionsDomain) {
+          const repository = Api{{domain_name}}Repository();
+          this.status = RequestStatus.LOADING;
+          return await useCaseList{{domain_name}}s(
+              repository,
+            )(data)
+            .then(response => {
+              this.status = RequestStatus.SUCCESS;
+              this.data = response;
+              this.list = [...this.list,... this.data.data];
+              return response;
+            })
+            .catch(error => {
+              this.status = RequestStatus.ERROR ;
+              HandleServerErrors(error);
+            });
+        }
+      }
+});

@@ -2,6 +2,7 @@
 import { program } from 'commander';
 import { createStructure } from './structure';
 import { attributes_separator, ParametersEntity, type_regular_expression, type_separator, typesString } from './types';
+import { toPascalCase } from './identifier-case-styles';
 
 program
   .name('domain-generator')
@@ -38,7 +39,7 @@ program
                 }
             )
         }
-        const domain_name = str.domain;
+        const domain_name = toPascalCase(str.domain);
         createStructure(domain_name, parameters)
     });
 

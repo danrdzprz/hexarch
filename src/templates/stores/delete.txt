@@ -1,0 +1,44 @@
+import { defineStore } from 'pinia';
+import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
+import type { ResponseFailure } from '~/data/modules/shared/domain/ResponseFailure';
+import type { ResponseSuccess } from '~/data/modules/shared/domain/ResponseSuccess';
+import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
+import { useCaseDelete{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-delete';
+
+export const useDelete{{domain_name}} = defineStore('DELETE_{{store_name}}',{
+      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
+        return {
+          status:RequestStatus.INITIAL,
+          message: null,
+          errors: ''
+        }
+      },
+      getters: {
+        get_status: (state):RequestStatus => state.status,
+      },
+      actions: {
+        async remove(id: string) {
+          const repository = Api{{domain_name}}Repository();
+          this.$reset();
+          this.status = RequestStatus.LOADING ;
+          return await useCaseDelete{{domain_name}}(
+              repository,
+            )(id)
+            .then(response => {
+              this.status = RequestStatus.SUCCESS;
+              this.message = HandleSuccessResponse(response);
+              return response;
+            })
+            .catch( e => {
+              this.status = RequestStatus.ERROR ;
+              this.errors = HandleServerErrors(e);
+            });
+        },
+        setFormStatus( value: RequestStatus ) {
+          return this.status = value;
+        },
+        resetForm() {
+          return this.status = RequestStatus.INITIAL;
+        },
+      }
+  });

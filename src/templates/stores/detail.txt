@@ -1,0 +1,41 @@
+
+import { defineStore } from 'pinia';
+import { useCaseDetail{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-detail';
+import type { Detail{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
+import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
+import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
+
+export const useDetail{{domain_name}} = defineStore('DETAIL_{{store_name}}',{
+      state: ():{status: RequestStatus, data: Detail{{domain_name}}Domain}=> {
+        return {
+          status:RequestStatus.INITIAL,
+          data:{
+            _id: '',
+            createdAt: '',
+            name: ''
+          }
+        }
+      },
+      getters: {
+        get_status: (state):RequestStatus => state.status,
+      },
+      actions: {
+        async getDetail(id: string) {
+          const repository = Api{{domain_name}}Repository();
+          this.$reset();
+          this.status = RequestStatus.LOADING;
+          return await useCaseDetail{{domain_name}}(
+              repository,
+            )(id)
+            .then(response => {
+              this.status = RequestStatus.SUCCESS;
+              this.data = response;
+              return response;
+            })
+            .catch(error => {
+              this.status = RequestStatus.ERROR ;
+              HandleServerErrors(error);
+            });
+        }
+      }
+});

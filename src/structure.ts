@@ -4,7 +4,7 @@ import * as path from 'path';
 import * as prompts from 'prompts';
 import { ParametersEntity } from './types';
 import { fillTemplate } from './replace';
-import { toKebabCase } from './identifier-case-styles';
+import { toKebabCase, toUpperSnakeCase } from './identifier-case-styles';
 
 export const createStructure = async (domain_name: string, parameters: ParametersEntity[], key_name = 'id', key_type = 'number')=> {
     
@@ -20,6 +20,8 @@ export const createStructure = async (domain_name: string, parameters: Parameter
     const dtos_folder =  `${domain_folder}/dtos`;
     const contracts_folder =  `${domain_folder}/contracts`;
     const infrastructure_folder =  `core/${toKebabCase(domain_name)}/infrastructure`;
+    const infrastructure_stores_folder =  `${infrastructure_folder}/stores`;
+    const infrastructure_repositories_folder =  `${infrastructure_folder}/repositories`;
     const shared_domain_folder =  `shared/domain`;
     const shared_domain_dtos_folder =  `shared/domain/dtos`;
 
@@ -36,6 +38,8 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         dto_folder,
         services_folder,
         use_cases_folder,
+        infrastructure_stores_folder,
+        infrastructure_repositories_folder
     ];
 
     structure.forEach(dir => {
@@ -48,13 +52,54 @@ export const createStructure = async (domain_name: string, parameters: Parameter
     await applicationLayer(domain_name, use_cases_folder, baseDir, key_name, key_type);
 
     const detail_template = fs.readFileSync('src/templates/repository.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_folder, `api-${toKebabCase(domain_name)}-repository.ts`), fillTemplate({
+    fs.writeFileSync(path.join(baseDir, infrastructure_repositories_folder, `api-${toKebabCase(domain_name)}-repository.ts`), fillTemplate({
             domain_name: domain_name,
             key_type: key_type,
             key_name: key_name,
         }, detail_template)
     );
     console.log(`📄 Api  ${domain_name} repository created `);
+
+    //stores
+    const create = fs.readFileSync('src/stores/create.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `create${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+        }, create)
+    );
+    console.log(`📄 Store to create ${domain_name} created `);
+
+    const update = fs.readFileSync('src/stores/update.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `update${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+        }, update)
+    );
+    console.log(`📄 Store to create ${domain_name} update `);
+
+    const remove = fs.readFileSync('src/stores/delete.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `delete${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+        }, remove)
+    );
+    console.log(`📄 Store to create ${domain_name} remove`);
+
+    const detail = fs.readFileSync('src/stores/detail.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `detail${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+        }, detail)
+    );
+    console.log(`📄 Store to create ${domain_name} detail`);
+
+    const list = fs.readFileSync('src/stores/list.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `list${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+        }, list)
+    );
+    console.log(`📄 Store to create ${domain_name} list`);
 
 }
 

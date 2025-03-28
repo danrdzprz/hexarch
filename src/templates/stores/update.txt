@@ -1,0 +1,45 @@
+import { defineStore } from 'pinia';
+import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
+import type { ResponseFailure } from '~/data/modules/shared/domain/ResponseFailure';
+import type { ResponseSuccess } from '~/data/modules/shared/domain/ResponseSuccess';
+import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
+import type { Update{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
+import { useCaseUpdate{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-update';
+
+export const useUpdate{{domain_name}} = defineStore('UPDATE_{{store_name}}',{
+      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
+        return {
+          status:RequestStatus.INITIAL,
+          message: null,
+          errors: ''
+        }
+      },
+      getters: {
+        get_status: (state):RequestStatus => state.status,
+      },
+      actions: {
+        async registerUser(id: string, data: Update{{domain_name}}Domain) {
+          const repository = Api{{domain_name}}Repository();
+          this.$reset();
+          this.status = RequestStatus.LOADING ;
+          return await useCaseUpdate{{domain_name}}(
+              repository,
+            )(id, data)
+            .then(response => {
+              this.status = RequestStatus.SUCCESS;
+              this.message = HandleSuccessResponse(response);
+              return response;
+            })
+            .catch( e => {
+              this.status = RequestStatus.ERROR ;
+              this.errors = HandleServerErrors(e);
+            });
+        },
+        setFormStatus( value: RequestStatus ) {
+          return this.status = value;
+        },
+        resetForm() {
+          return this.status = RequestStatus.INITIAL;
+        },
+      }
+  });
