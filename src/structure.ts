@@ -21,6 +21,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
     const contracts_folder =  `${domain_folder}/contracts`;
     const infrastructure_folder =  `core/${toKebabCase(domain_name)}/infrastructure`;
     const shared_domain_folder =  `shared/domain`;
+    const shared_domain_dtos_folder =  `shared/domain/dtos`;
 
     const structure = [
         'core',
@@ -31,6 +32,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         contracts_folder,
         infrastructure_folder,
         shared_domain_folder,
+        shared_domain_dtos_folder,
         dto_folder,
         services_folder,
         use_cases_folder,
@@ -42,7 +44,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         console.log(`📂 Folder created: ${fullPath}`);
     });
 
-    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, dtos_folder, baseDir, shared_domain_folder, key_name, key_type);
+    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, dtos_folder, baseDir, shared_domain_dtos_folder, key_name, key_type);
     await applicationLayer(domain_name, use_cases_folder, baseDir, key_name, key_type);
 
     const detail_template = fs.readFileSync('src/templates/repository.txt', 'utf-8');
@@ -112,8 +114,8 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
     const confirm_curd_actions = crud_actions.confirm as boolean;
     
     const shared_files =[
-        {name:'ResponseSuccess.ts' , url: 'src/templates/shared/ResponseSuccess.ts'},
-        {name:'ResponseFailure.ts' , url: 'src/templates/shared/ResponseFailure.ts'},
+        {name:'ResponseSuccess.ts' , url: 'src/templates/shared/dtos/ResponseSuccess.ts'},
+        {name:'ResponseFailure.ts' , url: 'src/templates/shared/dtos/ResponseFailure.ts'},
     ];
 
     if(confirm_curd_actions){
@@ -124,8 +126,8 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
         });
         const confirm_pagination = pagination.confirm as boolean;
         if(confirm_pagination){
-            shared_files.push({name: 'PaginationCollection.ts', url: 'src/templates/shared/PaginationCollection.ts'});
-            shared_files.push({name: 'PaginationOptions.ts', url: 'src/templates/shared/PaginationOptions.ts'});
+            shared_files.push({name: 'PaginationCollection.ts', url: 'src/templates/shared/dtos/PaginationCollection.ts'});
+            shared_files.push({name: 'PaginationOptions.ts', url: 'src/templates/shared/dtos/PaginationOptions.ts'});
         }
     }
 

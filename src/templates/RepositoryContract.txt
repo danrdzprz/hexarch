@@ -1,6 +1,6 @@
-import type { PaginationCollection } from "../../../../shared/domain/PaginationCollection";
-import type { PaginationOptions } from "../../../../shared/domain/PaginationOptions";
-import type { ResponseSuccess } from "../../../../shared/domain/ResponseSuccess";
+import type { PaginationCollection } from "../../../../shared/domain/dtos/PaginationCollection";
+import type { PaginationOptions } from "../../../../shared/domain/dtos/PaginationOptions";
+import type { ResponseSuccess } from "../../../../shared/domain/dtos/ResponseSuccess";
 import type { Create{{domain_name}} } from "../dtos/Create{{domain_name}}";
 import type { Detail{{domain_name}} } from "../dtos/Detail{{domain_name}}";
 import type { Update{{domain_name}} } from "../dtos/Update{{domain_name}}";

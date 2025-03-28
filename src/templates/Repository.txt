@@ -13,7 +13,7 @@ export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 	async function list(data: PaginationOptions): Promise<PaginationCollection<List{{domain_name}}>> {
 		return new Promise(async (resolve, reject) => {
 			const urlParams = new URLSearchParams(data).toString();
-			const response = await fetch(`${urlParams}`,{
+			const response = await fetch(`api-url${urlParams}`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -31,7 +31,7 @@ export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
 	async function create( data: Create{{domain_name}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(``,{
+			const response = await fetch(`api-url`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -52,7 +52,7 @@ export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
 	async function detail( {{key_name}}: {{key_type}} ): Promise<Detail{{domain_name}}> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(``,{
+			const response = await fetch(`api-url`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -71,7 +71,7 @@ export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
 	async function update({{key_name}}: {{key_type}}, data: Update{{domain_name}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(``,{
+			const response = await fetch(`api-url`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -90,7 +90,7 @@ export function {{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
 	async function destroy({{key_name}}: {{key_type}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(``,{
+			const response = await fetch(`api-url`,{
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',
