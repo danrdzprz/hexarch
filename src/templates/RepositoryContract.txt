@@ -1,9 +1,9 @@
 import { PaginationCollection } from "../../../../shared/domain/PaginationCollection";
 import { PaginationOptions } from "../../../../shared/domain/PaginationOptions";
 import { ResponseSuccess } from "../../../../shared/domain/ResponseSuccess";
-import { Create{{domain_name}} } from "../entities/Create{{domain_name}}";
-import { Detail{{domain_name}} } from "../entities/Detail{{domain_name}}";
-import { Update{{domain_name}} } from "../entities/Update{{domain_name}}";
+import { Create{{domain_name}} } from "../dtos/Create{{domain_name}}";
+import { Detail{{domain_name}} } from "../dtos/Detail{{domain_name}}";
+import { Update{{domain_name}} } from "../dtos/Update{{domain_name}}";
 
 export interface {{domain_name}}RepositoryContract 
 {

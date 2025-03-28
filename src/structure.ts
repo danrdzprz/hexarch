@@ -6,19 +6,20 @@ import { ParametersEntity } from './types';
 import { fillTemplate } from './replace';
 import { toKebabCase } from './identifier-case-styles';
 
-export const createStructure = async (domain_name: string, parameters: ParametersEntity[], key_name = 'id', key_type = 'string')=> {
+export const createStructure = async (domain_name: string, parameters: ParametersEntity[], key_name = 'id', key_type = 'number')=> {
     
 
     const baseDir = path.join(process.cwd(),'src/data');
 
-    const application_folder =  `core/${domain_name}/application`;
+    const application_folder =  `core/${toKebabCase(domain_name)}/application`;
     const dto_folder =  `${application_folder}/dto`;
     const services_folder =  `${application_folder}/services`;
     const use_cases_folder =  `${application_folder}/use_cases`;
-    const domain_folder =  `core/${domain_name}/domain`;
+    const domain_folder =  `core/${toKebabCase(domain_name)}/domain`;
     const entities_folder =  `${domain_folder}/entities`;
+    const dtos_folder =  `${domain_folder}/dtos`;
     const contracts_folder =  `${domain_folder}/contracts`;
-    const infrastructure_folder =  `core/${domain_name}/infrastructure`;
+    const infrastructure_folder =  `core/${toKebabCase(domain_name)}/infrastructure`;
     const shared_domain_folder =  `shared/domain`;
 
     const structure = [
@@ -26,6 +27,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         application_folder,
         domain_folder,
         entities_folder,
+        dtos_folder,
         contracts_folder,
         infrastructure_folder,
         shared_domain_folder,
@@ -40,7 +42,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         console.log(`📂 Folder created: ${fullPath}`);
     });
 
-    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, baseDir, shared_domain_folder, key_name, key_type);
+    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, dtos_folder, baseDir, shared_domain_folder, key_name, key_type);
     await applicationLayer(domain_name, use_cases_folder, baseDir, key_name, key_type);
 
     const detail_template = fs.readFileSync('src/templates/repository.txt', 'utf-8');
@@ -99,7 +101,7 @@ function applicationLayer(domain_name: string, use_cases_folder: string, baseDir
 
 
 
-async function domainLayer(domain_name: string, parameters: ParametersEntity[], contracts_folder: string, entities_folder: string, baseDir: string, shared_domain_folder: string, key_name: string, key_type: string){
+async function domainLayer(domain_name: string, parameters: ParametersEntity[], contracts_folder: string, entities_folder: string, dtos_folder: string, baseDir: string, shared_domain_folder: string, key_name: string, key_type: string){
     //shared
     const crud_actions = await prompts({
         type: 'confirm',
@@ -131,7 +133,7 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
         fs.writeFileSync(path.join(baseDir, shared_domain_folder, `${x.name}`), fs.readFileSync(x.url, 'utf-8'));
         console.log(`📄 Entity ${x.name} created `);
     })  
-    //create entities
+    //entity
     let entity_file = `export interface ${domain_name} \n{\n`
     entity_file+=`\tid:number;\n`;
     parameters.forEach( x => {
@@ -141,41 +143,41 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
     fs.writeFileSync(path.join(baseDir, entities_folder, `${domain_name}.ts`), entity_file);
     console.log(`📄 Entity ${domain_name} created `);
 
-    // update
-    const update_template = fs.readFileSync('src/templates/entities/UpdateEntity.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, entities_folder, `Update${domain_name}.ts`), fillTemplate({
+    // dtos
+    const update_template = fs.readFileSync('src/templates/dtos/UpdateDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Update${domain_name}.ts`), fillTemplate({
             domain_name: domain_name
         }, update_template)
     );
-    console.log(`📄 Update Entity ${domain_name} Updated `);
+    console.log(`📄 Update Dto ${domain_name} Updated `);
     
     // create
-    const create_template = fs.readFileSync('src/templates/entities/CreateEntity.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, entities_folder, `Create${domain_name}.ts`), fillTemplate({
+    const create_template = fs.readFileSync('src/templates/dtos/CreateDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Create${domain_name}.ts`), fillTemplate({
             domain_name: domain_name
         }, create_template)
     );
-    console.log(`📄 Create Entity ${domain_name} created `);
+    console.log(`📄 Create Dto ${domain_name} created `);
 
     // detail
-    const detail_template = fs.readFileSync('src/templates/entities/DetailEntity.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, entities_folder, `Detail${domain_name}.ts`), fillTemplate({
+    const detail_template = fs.readFileSync('src/templates/dtos/DetailDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Detail${domain_name}.ts`), fillTemplate({
             domain_name: domain_name,
             key_type: key_type,
             key_name: key_name,
         }, detail_template)
     );
-    console.log(`📄 Detail Entity ${domain_name} created `);
+    console.log(`📄 Detail Dto ${domain_name} created `);
 
     // list
-    const list_template = fs.readFileSync('src/templates/entities/ListEntity.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, entities_folder, `List${domain_name}.ts`), fillTemplate({
+    const list_template = fs.readFileSync('src/templates/dtos/ListDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `List${domain_name}.ts`), fillTemplate({
             domain_name: domain_name,
             key_type: key_type,
             key_name: key_name,
         }, list_template)
     );
-    console.log(`📄 List Entity ${domain_name} created `);
+    console.log(`📄 List Dto ${domain_name} created `);
     
 
     //create contracts

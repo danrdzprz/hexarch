@@ -1,5 +1,0 @@
-import { User } from "./{{domain_name}}";
-
-export interface List{{domain_name}} extends {{domain_name}}{
-    {{key_name}}: {{key_type}}
-}

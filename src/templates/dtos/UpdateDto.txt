@@ -1,4 +1,4 @@
-import { User } from "./{{domain_name}}";
+import { {{domain_name}} } from "../entities/{{domain_name}}";
 
 export interface Update{{domain_name}} extends {{domain_name}}{
 }

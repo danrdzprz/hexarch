@@ -1,0 +1,4 @@
+import { {{domain_name}} } from "../entities/{{domain_name}}";
+
+export interface Detail{{domain_name}} extends {{domain_name}}{
+}
