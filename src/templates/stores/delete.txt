@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
-import type { ResponseFailure } from '~/data/modules/shared/domain/ResponseFailure';
-import type { ResponseSuccess } from '~/data/modules/shared/domain/ResponseSuccess';
-import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
-import { useCaseDelete{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-delete';
+import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
+import type { ResponseFailure } from '~/modules/shared/domain/entities/ResponseFailure';
+import type { ResponseSuccess } from '~/modules/shared/domain/entities/ResponseSuccess';
+import { Api{{domain_name}}Repository } from '../repositories/api-{{domain_file}}-repository';
+import { Delete{{domain_name}}UseCase } from '../../application/use_cases/use-case-{{domain_file}}-delete';
 
 export const useDelete{{domain_name}} = defineStore('DELETE_{{store_name}}',{
       state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
@@ -17,13 +17,13 @@ export const useDelete{{domain_name}} = defineStore('DELETE_{{store_name}}',{
         get_status: (state):RequestStatus => state.status,
       },
       actions: {
-        async remove(id: string) {
+        async remove({{key_name}}: {{key_type}}) {
           const repository = Api{{domain_name}}Repository();
           this.$reset();
           this.status = RequestStatus.LOADING ;
-          return await useCaseDelete{{domain_name}}(
+          return await Delete{{domain_name}}UseCase(
               repository,
-            )(id)
+            )({{key_name}})
             .then(response => {
               this.status = RequestStatus.SUCCESS;
               this.message = HandleSuccessResponse(response);
@@ -33,12 +33,6 @@ export const useDelete{{domain_name}} = defineStore('DELETE_{{store_name}}',{
               this.status = RequestStatus.ERROR ;
               this.errors = HandleServerErrors(e);
             });
-        },
-        setFormStatus( value: RequestStatus ) {
-          return this.status = value;
-        },
-        resetForm() {
-          return this.status = RequestStatus.INITIAL;
         },
       }
   });

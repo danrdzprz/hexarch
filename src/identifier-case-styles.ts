@@ -1,6 +1,6 @@
 //snake_case
 export const toSnakeCase =  (str: string) => {
-    return str.replace(/([a-z])([A-Z])/g, '_').toLowerCase();
+    return str.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
 }
 
 //UPPER_CASE_SNAKE_CASE

@@ -1,10 +1,10 @@
-import { PaginationCollection } from "../../../../shared/domain/PaginationCollection";
-import { PaginationOptions } from "../../../../shared/domain/PaginationOptions";
-import { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
-import { Detail{{domain_name}} } from "../../domain/entities/Detail{{domain_name}}";
+import type { PaginationCollection } from "~/modules/shared/domain/dtos/PaginationCollection";
+import type { PaginationOptions } from "~/modules/shared/domain/dtos/PaginationOptions";
+import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
+import type { {{domain_name}} } from "../../domain/entities/{{domain_name}}";
 
 export function List{{domain_name}}UseCase (repository: {{domain_name}}RepositoryContract) {
-	return async (data: PaginationOptions): Promise<PaginationCollection<Detail{{domain_name}}>> => {
+	return async (data: PaginationOptions): Promise<PaginationCollection<{{domain_name}}>> => {
 		return await repository.list(data);
 	};
 }

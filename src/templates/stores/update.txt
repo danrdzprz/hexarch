@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
-import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
-import type { ResponseFailure } from '~/data/modules/shared/domain/ResponseFailure';
-import type { ResponseSuccess } from '~/data/modules/shared/domain/ResponseSuccess';
-import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
-import type { Update{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
-import { useCaseUpdate{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-update';
+import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
+import type { ResponseFailure } from '~/modules/shared/domain/entities/ResponseFailure';
+import type { ResponseSuccess } from '~/modules/shared/domain/entities/ResponseSuccess';
+import type { Update{{domain_name}} } from '../../domain/dtos/update-{{domain_file}}';
+import { Api{{domain_name}}Repository } from '../repositories/api-{{domain_file}}-repository';
+import { Update{{domain_name}}UseCase } from '../../application/use_cases/update-{{domain_file}}-use-case';
 
 export const useUpdate{{domain_name}} = defineStore('UPDATE_{{store_name}}',{
       state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
@@ -18,13 +18,13 @@ export const useUpdate{{domain_name}} = defineStore('UPDATE_{{store_name}}',{
         get_status: (state):RequestStatus => state.status,
       },
       actions: {
-        async registerUser(id: string, data: Update{{domain_name}}Domain) {
+        async update({{key_name}}: {{key_type}}, data: Update{{domain_name}}) {
           const repository = Api{{domain_name}}Repository();
           this.$reset();
           this.status = RequestStatus.LOADING ;
-          return await useCaseUpdate{{domain_name}}(
+          return await Update{{domain_name}}UseCase(
               repository,
-            )(id, data)
+            )({{key_name}}, data)
             .then(response => {
               this.status = RequestStatus.SUCCESS;
               this.message = HandleSuccessResponse(response);

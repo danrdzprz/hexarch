@@ -1,4 +1,4 @@
-import { {{domain_name}} } from "../entities/{{domain_name}}";
+import type { {{domain_name}} } from "../../domain/entities/{{domain_name}}";
 
 export interface List{{domain_name}} extends {{domain_name}}{
 }

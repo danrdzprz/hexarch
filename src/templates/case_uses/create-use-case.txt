@@ -1,6 +1,6 @@
-import { ResponseSuccess } from "../../../../shared/domain/ResponseSuccess";
-import { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
-import { Create{{domain_name}} } from "../../domain/entities/Create{{domain_name}}";
+import type { ResponseSuccess } from "~/modules/shared/domain/dtos/ResponseSuccess";
+import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
+import type { Create{{domain_name}} } from "../dtos/Create{{domain_name}}";
 
 export function Create{{domain_name}}UseCase (repository: {{domain_name}}RepositoryContract) {
 	return async (data: Create{{domain_name}}): Promise<ResponseSuccess> => {

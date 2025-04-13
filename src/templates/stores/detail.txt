@@ -1,18 +1,15 @@
 
 import { defineStore } from 'pinia';
-import { useCaseDetail{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-detail';
-import type { Detail{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
-import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
-import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
+import { Detail{{domain_name}}UseCase } from '../../application/use_cases/detail-{{domain_file}}-use-case';
+import type { {{domain_name}} } from '../../domain/entities/{{domain_name}}';
+import { Api{{domain_name}}Repository } from '../repositories/api-{{domain_file}}-repository';
+import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
 
 export const useDetail{{domain_name}} = defineStore('DETAIL_{{store_name}}',{
-      state: ():{status: RequestStatus, data: Detail{{domain_name}}Domain}=> {
+      state: ():{status: RequestStatus, data: {{domain_name}}}=> {
         return {
           status:RequestStatus.INITIAL,
           data:{
-            _id: '',
-            createdAt: '',
-            name: ''
           }
         }
       },
@@ -20,13 +17,13 @@ export const useDetail{{domain_name}} = defineStore('DETAIL_{{store_name}}',{
         get_status: (state):RequestStatus => state.status,
       },
       actions: {
-        async getDetail(id: string) {
+        async detail({{key_name}}: {{key_type}}) {
           const repository = Api{{domain_name}}Repository();
           this.$reset();
           this.status = RequestStatus.LOADING;
-          return await useCaseDetail{{domain_name}}(
+          return await Detail{{domain_name}}UseCase(
               repository,
-            )(id)
+            )({{key_name}})
             .then(response => {
               this.status = RequestStatus.SUCCESS;
               this.data = response;

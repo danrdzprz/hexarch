@@ -1,10 +1,10 @@
- import { defineStore } from 'pinia';
-import { RequestStatus } from '~/data/modules/shared/domain/RequestStatus';
-import type { ResponseFailure } from '~/data/modules/shared/domain/ResponseFailure';
-import type { ResponseSuccess } from '~/data/modules/shared/domain/ResponseSuccess';
-import { Api{{domain_name}}Repository } from '~/data/modules/chat-rooms/infra/api-chat-room-repository';
-import { useCaseCreate{{domain_name}} } from '~/data/modules/chat-rooms/application/use-case-create';
-import type { Create{{domain_name}}Domain } from '~/data/modules/chat-rooms/domain/chat-room.domain';
+import { defineStore } from 'pinia';
+import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
+import type { ResponseFailure } from '~/modules/shared/domain/entities/ResponseFailure';
+import type { ResponseSuccess } from '~/modules/shared/domain/entities/ResponseSuccess';
+import type { Api{{domain_name}}Repository } from '../repositories/api-{{domain_file}}-repository';
+import type { Create{{domain_name}}UseCase } from '../../application/use_cases/create-{{domain_file}}-use-case';
+import type { Create{{domain_name}} } from '../../domain/application/dtos/{{domain_file}}';
 
 export const useCreate{{domain_name}} = defineStore('CREATE_{{store_name}}',{
       state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
@@ -18,11 +18,11 @@ export const useCreate{{domain_name}} = defineStore('CREATE_{{store_name}}',{
         get_status: (state):RequestStatus => state.status,
       },
       actions: {
-        async register(data: Create{{domain_name}}Domain) {
+        async save(data: Create{{domain_name}}) {
           const repository = Api{{domain_name}}Repository();
           this.$reset();
           this.status = RequestStatus.LOADING ;
-          return await useCaseCreate{{domain_name}}(
+          return await Create{{domain_name}}UseCase(
               repository,
             )(data)
             .then(response => {

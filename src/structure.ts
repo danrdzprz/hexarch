@@ -9,21 +9,21 @@ import { toKebabCase, toUpperSnakeCase } from './identifier-case-styles';
 export const createStructure = async (domain_name: string, parameters: ParametersEntity[], key_name = 'id', key_type = 'number')=> {
     
 
-    const baseDir = path.join(process.cwd(),'src/data');
+    const baseDir = path.join(process.cwd(),'src/modules');
 
     const application_folder =  `core/${toKebabCase(domain_name)}/application`;
-    const dto_folder =  `${application_folder}/dto`;
+    const dtos_folder =  `${application_folder}/dtos`;
     const services_folder =  `${application_folder}/services`;
     const use_cases_folder =  `${application_folder}/use_cases`;
     const domain_folder =  `core/${toKebabCase(domain_name)}/domain`;
     const entities_folder =  `${domain_folder}/entities`;
-    const dtos_folder =  `${domain_folder}/dtos`;
     const contracts_folder =  `${domain_folder}/contracts`;
     const infrastructure_folder =  `core/${toKebabCase(domain_name)}/infrastructure`;
-    const infrastructure_stores_folder =  `${infrastructure_folder}/stores`;
     const infrastructure_repositories_folder =  `${infrastructure_folder}/repositories`;
     const shared_domain_folder =  `shared/domain`;
-    const shared_domain_dtos_folder =  `shared/domain/dtos`;
+    const shared_domain_dtos_folder =  `shared/application/dtos`;
+    const shared_domain_entities_folder =  `shared/domain/entities`;
+    const store_folder =  `../stores`;
 
     const structure = [
         'core',
@@ -35,11 +35,11 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         infrastructure_folder,
         shared_domain_folder,
         shared_domain_dtos_folder,
-        dto_folder,
         services_folder,
         use_cases_folder,
-        infrastructure_stores_folder,
-        infrastructure_repositories_folder
+        store_folder,
+        infrastructure_repositories_folder,
+        shared_domain_entities_folder
     ];
 
     structure.forEach(dir => {
@@ -48,53 +48,64 @@ export const createStructure = async (domain_name: string, parameters: Parameter
         console.log(`📂 Folder created: ${fullPath}`);
     });
 
-    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, dtos_folder, baseDir, shared_domain_dtos_folder, key_name, key_type);
-    await applicationLayer(domain_name, use_cases_folder, baseDir, key_name, key_type);
+    await domainLayer(domain_name, parameters, contracts_folder, entities_folder, baseDir, shared_domain_entities_folder, key_name, key_type);
+    await applicationLayer(domain_name, use_cases_folder, baseDir,dtos_folder, key_name, key_type);
 
-    const detail_template = fs.readFileSync('src/templates/repository.txt', 'utf-8');
+    const repository = fs.readFileSync('src/templates/repository.txt', 'utf-8');
     fs.writeFileSync(path.join(baseDir, infrastructure_repositories_folder, `api-${toKebabCase(domain_name)}-repository.ts`), fillTemplate({
             domain_name: domain_name,
             key_type: key_type,
             key_name: key_name,
-        }, detail_template)
+        }, repository)
     );
     console.log(`📄 Api  ${domain_name} repository created `);
 
     //stores
-    const create = fs.readFileSync('src/stores/create.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `create${toKebabCase(domain_name)}.ts`), fillTemplate({
+    const create = fs.readFileSync('src/templates/stores/create.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `create-${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_file: toKebabCase(domain_name),
             domain_name: domain_name,
             store_name: `${toUpperSnakeCase(domain_name)}`,
         }, create)
     );
     console.log(`📄 Store to create ${domain_name} created `);
 
-    const update = fs.readFileSync('src/stores/update.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `update${toKebabCase(domain_name)}.ts`), fillTemplate({
+    const update = fs.readFileSync('src/templates/stores/update.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `update-${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_file: toKebabCase(domain_name),
             domain_name: domain_name,
             store_name: `${toUpperSnakeCase(domain_name)}`,
+            key_type: key_type,
+            key_name: key_name,
         }, update)
     );
     console.log(`📄 Store to create ${domain_name} update `);
 
-    const remove = fs.readFileSync('src/stores/delete.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `delete${toKebabCase(domain_name)}.ts`), fillTemplate({
+    const remove = fs.readFileSync('src/templates/stores/delete.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `delete-${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_file: toKebabCase(domain_name),
             domain_name: domain_name,
             store_name: `${toUpperSnakeCase(domain_name)}`,
+            key_type: key_type,
+            key_name: key_name,
         }, remove)
     );
     console.log(`📄 Store to create ${domain_name} remove`);
 
-    const detail = fs.readFileSync('src/stores/detail.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `detail${toKebabCase(domain_name)}.ts`), fillTemplate({
+    const detail = fs.readFileSync('src/templates/stores/detail.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `detail-${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_file: toKebabCase(domain_name),
             domain_name: domain_name,
             store_name: `${toUpperSnakeCase(domain_name)}`,
+            key_type: key_type,
+            key_name: key_name,
         }, detail)
     );
     console.log(`📄 Store to create ${domain_name} detail`);
 
-    const list = fs.readFileSync('src/stores/list.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, infrastructure_stores_folder, `list${toKebabCase(domain_name)}.ts`), fillTemplate({
+    const list = fs.readFileSync('src/templates/stores/list.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `list-${toKebabCase(domain_name)}.ts`), fillTemplate({
+            domain_file: toKebabCase(domain_name),
             domain_name: domain_name,
             store_name: `${toUpperSnakeCase(domain_name)}`,
         }, list)
@@ -103,7 +114,7 @@ export const createStructure = async (domain_name: string, parameters: Parameter
 
 }
 
-function applicationLayer(domain_name: string, use_cases_folder: string, baseDir: string, key_name: string, key_type: string){
+function applicationLayer(domain_name: string, use_cases_folder: string, baseDir: string, dtos_folder:string, key_name: string, key_type: string){
     const create_template = fs.readFileSync('src/templates/case_uses/create-use-case.txt', 'utf-8');
     fs.writeFileSync(path.join(baseDir, use_cases_folder, `create-${toKebabCase(domain_name)}-use-case.ts`), fillTemplate({
             domain_name: domain_name,
@@ -144,11 +155,47 @@ function applicationLayer(domain_name: string, use_cases_folder: string, baseDir
         }, detail_template)
     );
     console.log(`📄 Detail use case ${domain_name} created `);
+
+    // dtos
+    const update_dto = fs.readFileSync('src/templates/dtos/UpdateDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Update${domain_name}.ts`), fillTemplate({
+            domain_name: domain_name
+        }, update_dto)
+    );
+    console.log(`📄 Update Dto ${domain_name} Updated `);
+    
+    // create
+    const create_dto = fs.readFileSync('src/templates/dtos/CreateDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Create${domain_name}.ts`), fillTemplate({
+            domain_name: domain_name
+        }, create_dto)
+    );
+    console.log(`📄 Create Dto ${domain_name} created `);
+
+    // detail
+    const detail_dto = fs.readFileSync('src/templates/dtos/DetailDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `Detail${domain_name}.ts`), fillTemplate({
+            domain_name: domain_name,
+            key_type: key_type,
+            key_name: key_name,
+        }, detail_dto)
+    );
+    console.log(`📄 Detail Dto ${domain_name} created `);
+
+    // list
+    const list_dto = fs.readFileSync('src/templates/dtos/ListDto.txt', 'utf-8');
+    fs.writeFileSync(path.join(baseDir, dtos_folder, `List${domain_name}.ts`), fillTemplate({
+            domain_name: domain_name,
+            key_type: key_type,
+            key_name: key_name,
+        }, list_dto)
+    );
+    console.log(`📄 List Dto ${domain_name} created `);
 }
 
 
 
-async function domainLayer(domain_name: string, parameters: ParametersEntity[], contracts_folder: string, entities_folder: string, dtos_folder: string, baseDir: string, shared_domain_folder: string, key_name: string, key_type: string){
+async function domainLayer(domain_name: string, parameters: ParametersEntity[], contracts_folder: string, entities_folder: string, baseDir: string, shared_domain_folder: string, key_name: string, key_type: string){
     //shared
     const crud_actions = await prompts({
         type: 'confirm',
@@ -159,8 +206,8 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
     const confirm_curd_actions = crud_actions.confirm as boolean;
     
     const shared_files =[
-        {name:'ResponseSuccess.ts' , url: 'src/templates/shared/dtos/ResponseSuccess.ts'},
-        {name:'ResponseFailure.ts' , url: 'src/templates/shared/dtos/ResponseFailure.ts'},
+        {name:'ResponseSuccess.ts' , url: 'src/templates/shared/domain/entities/ResponseSuccess.ts'},
+        {name:'ResponseFailure.ts' , url: 'src/templates/shared/domain/entities/ResponseFailure.ts'},
     ];
 
     if(confirm_curd_actions){
@@ -171,8 +218,8 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
         });
         const confirm_pagination = pagination.confirm as boolean;
         if(confirm_pagination){
-            shared_files.push({name: 'PaginationCollection.ts', url: 'src/templates/shared/dtos/PaginationCollection.ts'});
-            shared_files.push({name: 'PaginationOptions.ts', url: 'src/templates/shared/dtos/PaginationOptions.ts'});
+            shared_files.push({name: 'PaginationCollection.ts', url: 'src/templates/shared/domain/entities/PaginationCollection.ts'});
+            shared_files.push({name: 'PaginationOptions.ts', url: 'src/templates/shared/domain/entities/PaginationOptions.ts'});
         }
     }
 
@@ -181,51 +228,23 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
         console.log(`📄 Entity ${x.name} created `);
     })  
     //entity
+    //main entity
     let entity_file = `export interface ${domain_name} \n{\n`
-    entity_file+=`\tid:number;\n`;
+    entity_file+=`\tid: number;\n`;
     parameters.forEach( x => {
-        entity_file+=`\t${x.name}:${x.type};\n`;
+        entity_file+=`\t${x.name}: ${x.type};\n`;
     });
     entity_file+=`}\n`;
     fs.writeFileSync(path.join(baseDir, entities_folder, `${domain_name}.ts`), entity_file);
     console.log(`📄 Entity ${domain_name} created `);
-
-    // dtos
-    const update_template = fs.readFileSync('src/templates/dtos/UpdateDto.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `Update${domain_name}.ts`), fillTemplate({
-            domain_name: domain_name
-        }, update_template)
-    );
-    console.log(`📄 Update Dto ${domain_name} Updated `);
-    
-    // create
-    const create_template = fs.readFileSync('src/templates/dtos/CreateDto.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `Create${domain_name}.ts`), fillTemplate({
-            domain_name: domain_name
-        }, create_template)
-    );
-    console.log(`📄 Create Dto ${domain_name} created `);
-
-    // detail
-    const detail_template = fs.readFileSync('src/templates/dtos/DetailDto.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `Detail${domain_name}.ts`), fillTemplate({
-            domain_name: domain_name,
-            key_type: key_type,
-            key_name: key_name,
-        }, detail_template)
-    );
-    console.log(`📄 Detail Dto ${domain_name} created `);
-
-    // list
-    const list_template = fs.readFileSync('src/templates/dtos/ListDto.txt', 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `List${domain_name}.ts`), fillTemplate({
-            domain_name: domain_name,
-            key_type: key_type,
-            key_name: key_name,
-        }, list_template)
-    );
-    console.log(`📄 List Dto ${domain_name} created `);
-    
+    //detail entity
+    // const detail_entity = fs.readFileSync('src/templates/entities.txt', 'utf-8');
+    // fs.writeFileSync(path.join(baseDir, contracts_folder, `Detail${domain_name}.ts`), fillTemplate({
+    //         domain_name: domain_name,
+    //         key_type: key_type,
+    //         key_name: key_name,
+    //     }, detail_entity)
+    // );
 
     //create contracts
     const contract_template = fs.readFileSync('src/templates/RepositoryContract.txt', 'utf-8');
