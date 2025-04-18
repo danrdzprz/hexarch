@@ -1,4 +1,4 @@
-import type { Detail{{domain_name}} } from "../../domain/entities/Detail{{domain_name}}";
+import type { {{domain_name}} } from "../../domain/entities/{{domain_name}}";
 import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
 
 export function Detail{{domain_name}}UseCase (repository: {{domain_name}}RepositoryContract) {

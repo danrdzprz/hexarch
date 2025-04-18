@@ -1,0 +1,16 @@
+import type { PaginationCollection } from "~/modules/shared/domain/entities/PaginationCollection";
+import type { PaginationOptions } from "~/modules/shared/domain/entities/PaginationOptions";
+import type { ResponseSuccess } from "~/modules/shared/domain/entities/ResponseSuccess";
+import type { {{domain_name}} } from "../entities/{{domain_name}}";
+import type { Create{{domain_name}} } from "../../application/dtos/Create{{domain_name}}";
+import type { Update{{domain_name}} } from "../../application/dtos/Update{{domain_name}}";
+
+
+export interface {{domain_name}}RepositoryContract 
+{
+	list: (data: PaginationOptions) => Promise<PaginationCollection<{{domain_name}}>>;
+    create: (data: Create{{domain_name}}) => Promise<ResponseSuccess>;
+    detail: ({{key_name}}:{{key_type}}) => Promise<{{domain_name}}>;
+    update: ({{key_name}}:{{key_type}}, data: Update{{domain_name}}) => Promise<ResponseSuccess>;
+    destroy: ({{key_name}}:{{key_type}}) => Promise<ResponseSuccess>;
+}

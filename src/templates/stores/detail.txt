@@ -1,8 +1,8 @@
 
 import { defineStore } from 'pinia';
-import { Detail{{domain_name}}UseCase } from '../../application/use_cases/detail-{{domain_file}}-use-case';
-import type { {{domain_name}} } from '../../domain/entities/{{domain_name}}';
-import { Api{{domain_name}}Repository } from '../repositories/api-{{domain_file}}-repository';
+import { Detail{{domain_name}}UseCase } from '../application/use_cases/detail-{{domain_file}}-use-case';
+import type { {{domain_name}} } from '../domain/entities/{{domain_name}}';
+import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
 import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
 
 export const useDetail{{domain_name}} = defineStore('DETAIL_{{store_name}}',{
