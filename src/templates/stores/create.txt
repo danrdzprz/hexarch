@@ -2,9 +2,9 @@ import { defineStore } from 'pinia';
 import { RequestStatus } from '~/modules/shared/domain/entities/RequestStatus';
 import type { ResponseFailure } from '~/modules/shared/domain/entities/ResponseFailure';
 import type { ResponseSuccess } from '~/modules/shared/domain/entities/ResponseSuccess';
-import type { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
-import type { Create{{domain_name}}UseCase } from '../application/use_cases/create-{{domain_file}}-use-case';
-import type { Create{{domain_name}} } from '../application/dtos/{{domain_file}}';
+import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
+import { Create{{domain_name}}UseCase } from '../application/use_cases/create-{{domain_file}}-use-case';
+import type { Create{{domain_name}} } from '../application/dtos/create-{{domain_file}}';
 
 export const useCreate{{domain_name}} = defineStore('CREATE_{{store_name}}',{
       state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {

@@ -2,10 +2,10 @@ import type { PaginationCollection } from "~/modules/shared/domain/dtos/Paginati
 import type { PaginationOptions } from "~/modules/shared/domain/dtos/PaginationOptions";
 import type { ResponseFailure } from "~/modules/shared/domain/dtos/ResponseFailure";
 import type { ResponseSuccess } from "~/modules/shared/domain/dtos/ResponseSuccess";
-import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_name}}RepositoryContract";
-import type { {{domain_name}} } from "../../domain/entities/{{domain_name}}";
-import type { Create{{domain_name}} } from "../../application/dtos/Create{{domain_name}}";
-import type { Update{{domain_name}} } from "../../application/dtos/Update{{domain_name}}";
+import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
+import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
+import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
+import type { Update{{domain_name}} } from "../../application/dtos/update-{{domain_file}}";
 
 export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
