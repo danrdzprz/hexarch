@@ -1,7 +1,5 @@
-import type { PaginationCollection } from "~/modules/shared/domain/dtos/PaginationCollection";
-import type { PaginationOptions } from "~/modules/shared/domain/dtos/PaginationOptions";
-import type { ResponseFailure } from "~/modules/shared/domain/dtos/ResponseFailure";
-import type { ResponseSuccess } from "~/modules/shared/domain/dtos/ResponseSuccess";
+import type { ResponseFailure } from "~/modules/shared/domain/entities/response-failure";
+import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
 import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
 import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
 import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
@@ -9,10 +7,9 @@ import type { Update{{domain_name}} } from "../../application/dtos/update-{{doma
 
 export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
-	async function list(data: PaginationOptions): Promise<PaginationCollection<{{domain_name}}>> {
+	async function list(): Promise<{{domain_name}}> {
 		return new Promise(async (resolve, reject) => {
-			const params = objectToParams(data).toString();
-			const response = await fetch(`api-url${params}`,{
+			const response = await fetch(`api-url`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -21,7 +18,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 				},
 			});
 			if(response.ok){
-				resolve(await response.json() as PaginationCollection<{{domain_name}}>);
+				resolve(await response.json() as<{{domain_name}}>);
 			}else{
 				reject( await response.json() as ResponseFailure);
 			}
