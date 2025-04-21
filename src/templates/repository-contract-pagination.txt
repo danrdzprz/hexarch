@@ -1,9 +1,9 @@
 import type { PaginationCollection } from "~/modules/shared/domain/entities/pagination-collection";
 import type { PaginationOptions } from "~/modules/shared/domain/entities/pagination-options";
 import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
-import type { {{domain_name}} } from "../entities/{{domain_name}}";
-import type { Create{{domain_name}} } from "../../application/dtos/Create{{domain_name}}";
-import type { Update{{domain_name}} } from "../../application/dtos/Update{{domain_name}}";
+import type { {{domain_name}} } from "../entities/{{domain_file}}";
+import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
+import type { Update{{domain_name}} } from "../../application/dtos/update-{{domain_file}}";
 
 
 export interface {{domain_name}}RepositoryContract 

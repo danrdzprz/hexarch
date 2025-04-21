@@ -1,4 +1,4 @@
-import type { ResponseSuccess } from "~/modules/shared/domain/dtos/ResponseSuccess";
+import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
 import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
 import type { Update{{domain_name}} } from "../dtos/update-{{domain_file}}";
 

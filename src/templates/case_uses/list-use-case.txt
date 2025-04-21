@@ -1,4 +1,4 @@
-import type { PaginationOptions } from "~/modules/shared/domain/dtos/PaginationOptions";
+import type { PaginationOptions } from "~/modules/shared/domain/entities/pagination-options";
 import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
 import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
 
