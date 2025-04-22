@@ -3,7 +3,7 @@ Hexarch is an hexagonal architecture generator for vue.
 
 ## Global installation ( suggested )
 
-* npm install hexarch -g
+* npm i @danrdzprz/hexarch -g
 
 ## Command
 
@@ -15,7 +15,7 @@ $ hexarch domain -d NameEntity -p attr1:string,attr2:number
 
 ## Local installation 
 
-* npm install hexarch -g
+* npm install @danrdzprz/hexarch
 * Add the next line to package.json => "hexarch": "node ./node_modules/hexarch/dist/index.js"
 
 
