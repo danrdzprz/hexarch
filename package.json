@@ -1,15 +1,17 @@
 {
-  "name": "generator-domain",
+  "name": "hexarch",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
   "bin": {
-    "mi-generador": "dist/index.js"
+    "hexarch": "dist/index.js",
+    "ci": "npm run build"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "start": "ts-node src/index.ts"
+    "start": "ts-node src/index.ts",
+    "dev": "node dist/index.js"
 
   },
   "keywords": [],
