@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 import { program } from 'commander';
 import { createStructure } from './structure';
 import { attributes_separator, ParametersEntity, type_regular_expression, type_separator, typesString } from './types';
