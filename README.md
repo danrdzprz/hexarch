@@ -15,8 +15,8 @@ $ hexarch domain -d NameEntity -p attr1:string,attr2:number
 
 ## Local installation 
 
-* npm install @danrdzprz/hexarch
-* Add the next line to package.json => "hexarch": "node ./node_modules/hexarch/dist/index.js"
+* npm install @danrdzprz/hexarch --save-dev
+* Add the next line to package.json in scripts section => "hexarch": "node ./node_modules/@danrdzprz/hexarch/dist/index.js"
 
 
 ## Command
