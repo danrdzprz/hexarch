@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import { RequestStatus } from '~/modules/shared/domain/entities/request-status';
-import type { {{domain_name}} } from '../domain/entities/{{domain_file}}';
-import { List{{domain_name}}UseCase } from '../application/use_cases/list-{{domain_file}}-use-case';
-import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
+import type { Test } from '../domain/entities/test';
+import { ListTestUseCase } from '../application/use_cases/list-test-use-case';
+import { ApiTestRepository } from '../infrastructure/repositories/api-test-repository';
 
-export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
-      state: ():{status: RequestStatus, data: {{domain_name}}[]}=> {
+export const useListTest = defineStore('LIST_TEST',{
+      state: ():{status: RequestStatus, data: Test[]}=> {
         return {
           status:RequestStatus.INITIAL,
           data:[],
@@ -16,9 +16,9 @@ export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
       },
       actions: {
         async getList() {
-          const repository = Api{{domain_name}}Repository();
+          const repository = ApiTestRepository();
           this.status = RequestStatus.LOADING;
-          return await List{{domain_name}}UseCase(
+          return await ListTestUseCase(
               repository,
             )()
             .then(response => {

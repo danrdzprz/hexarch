@@ -1,26 +1,29 @@
-import { defineStore } from 'pinia';
-import { RequestStatus } from '~/modules/shared/domain/entities/request-status';
-import type { {{domain_name}} } from '../domain/entities/{{domain_file}}';
-import { List{{domain_name}}UseCase } from '../application/use_cases/list-{{domain_file}}-use-case';
-import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
 
-export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
-      state: ():{status: RequestStatus, data: {{domain_name}}[]}=> {
+import { defineStore } from 'pinia';
+import { DetailTestUseCase } from '../application/use_cases/detail-test-use-case';
+import type { Test } from '../domain/entities/test';
+import { ApiTestRepository } from '../infrastructure/repositories/api-test-repository';
+import { RequestStatus } from '~/modules/shared/domain/entities/request-status';
+
+export const useDetailTest = defineStore('DETAIL_TEST',{
+      state: ():{status: RequestStatus, data: Test}=> {
         return {
           status:RequestStatus.INITIAL,
-          data:[],
+          data:{
+          }
         }
       },
       getters: {
         get_status: (state):RequestStatus => state.status,
       },
       actions: {
-        async getList() {
-          const repository = Api{{domain_name}}Repository();
+        async detail(id: number) {
+          const repository = ApiTestRepository();
+          this.$reset();
           this.status = RequestStatus.LOADING;
-          return await List{{domain_name}}UseCase(
+          return await DetailTestUseCase(
               repository,
-            )()
+            )(id)
             .then(response => {
               this.status = RequestStatus.SUCCESS;
               this.data = response;

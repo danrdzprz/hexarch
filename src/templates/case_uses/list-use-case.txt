@@ -3,7 +3,7 @@ import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{
 import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
 
 export function List{{domain_name}}UseCase (repository: {{domain_name}}RepositoryContract) {
-	return async (data: PaginationOptions): Promise<{{domain_name}}> => {
-		return await repository.list(data);
+	return async (): Promise<{{domain_name}}[]> => {
+		return await repository.list();
 	};
 }

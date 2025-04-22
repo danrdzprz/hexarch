@@ -1,4 +1,3 @@
-import type { PaginationOptions } from "~/modules/shared/domain/entities/pagination-options";
 import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
 import type { {{domain_name}} } from "../entities/{{domain_file}}";
 import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
@@ -7,7 +6,7 @@ import type { Update{{domain_name}} } from "../../application/dtos/update-{{doma
 
 export interface {{domain_name}}RepositoryContract 
 {
-	list: (data: PaginationOptions) => Promise<{{domain_name}}>;
+	list: () => Promise<{{domain_name}}[]>;
     create: (data: Create{{domain_name}}) => Promise<ResponseSuccess>;
     detail: ({{key_name}}:{{key_type}}) => Promise<{{domain_name}}>;
     update: ({{key_name}}:{{key_type}}, data: Update{{domain_name}}) => Promise<ResponseSuccess>;

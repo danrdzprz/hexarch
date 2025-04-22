@@ -1,13 +1,13 @@
 import type { ResponseFailure } from "~/modules/shared/domain/entities/response-failure";
 import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
-import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
-import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
-import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
-import type { Update{{domain_name}} } from "../../application/dtos/update-{{domain_file}}";
+import type { TestRepositoryContract } from "../../domain/contracts/test-repository-contract";
+import type { Test } from "../../domain/entities/test";
+import type { CreateTest } from "../../application/dtos/create-test";
+import type { UpdateTest } from "../../application/dtos/update-test";
 
-export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContract {
+export function ApiTestRepository(): TestRepositoryContract {
 
-	async function list(): Promise<{{domain_name}}[]> {
+	async function list(): Promise<Test[]> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'GET',
@@ -18,14 +18,14 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 				},
 			});
 			if(response.ok){
-				resolve(await response.json() as {{domain_name}}[]);
+				resolve(await response.json() as Test[]);
 			}else{
 				reject( await response.json() as ResponseFailure);
 			}
 		});
 	}
 
-	async function create( data: Create{{domain_name}}): Promise<ResponseSuccess> {
+	async function create( data: CreateTest): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'POST',
@@ -46,7 +46,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	
 
-	async function detail( {{key_name}}: {{key_type}} ): Promise<{{domain_name}}> {
+	async function detail( id: number ): Promise<Test> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'GET',
@@ -57,7 +57,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 				},
 			});
 			if(response.ok){
-				resolve(await response.json() as {{domain_name}});
+				resolve(await response.json() as Test);
 			}else{
 				reject( await response.json() as ResponseFailure);
 			}
@@ -65,7 +65,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 	}
 
 
-	async function update({{key_name}}: {{key_type}}, data: Update{{domain_name}}): Promise<ResponseSuccess> {
+	async function update(id: number, data: UpdateTest): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'PUT',
@@ -84,7 +84,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 		});
 	}
 
-	async function destroy({{key_name}}: {{key_type}}): Promise<ResponseSuccess> {
+	async function destroy(id: number): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'DELETE',
