@@ -2,12 +2,12 @@ import { defineStore } from 'pinia';
 import type { PaginationCollection } from '~/modules/shared/domain/entities/pagination-collection';
 import { RequestStatus } from '~/modules/shared/domain/entities/request-status';
 import type { PaginationOptions } from '~/modules/shared/domain/entities/pagination-options';
-import type { {{domain_name}} } from '../domain/entities/{{domain_file}}';
 import { List{{domain_name}}UseCase } from '../application/use_cases/list-{{domain_file}}-use-case';
 import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
+import type { List{{domain_name}}Test } from '../domain/entities/list-{{domain_file}}';
 
 export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
-      state: ():{status: RequestStatus, data: PaginationCollection<{{domain_name}}>}=> {
+      state: ():{status: RequestStatus, data: PaginationCollection<List{{domain_name}}>}=> {
         return {
           status:RequestStatus.INITIAL,
           data:{

@@ -3,9 +3,10 @@ import { RequestStatus } from '~/modules/shared/domain/entities/request-status';
 import type { {{domain_name}} } from '../domain/entities/{{domain_file}}';
 import { List{{domain_name}}UseCase } from '../application/use_cases/list-{{domain_file}}-use-case';
 import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api-{{domain_file}}-repository';
+import type { List{{domain_name}}Test } from '../domain/entities/list-{{domain_file}}';
 
 export const useList{{domain_name}} = defineStore('LIST_{{store_name}}',{
-      state: ():{status: RequestStatus, data: {{domain_name}}[]}=> {
+      state: ():{status: RequestStatus, data: List{{domain_name}}[]}=> {
         return {
           status:RequestStatus.INITIAL,
           data:[],
