@@ -1,5 +1,5 @@
 # hexarch
-Hexarch is an hexagonal architecture generator for vue. It helps to crate files and folders following hexagonal architecture and screaming architecture given a domain name.
+Hexarch is an hexagonal architecture generator for vue. It helps to create files and folders following hexagonal architecture and screaming architecture given a domain name.
 
 ## Global installation
 

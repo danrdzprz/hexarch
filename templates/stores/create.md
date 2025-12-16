@@ -7,11 +7,11 @@ import { Create{{domain_name}}UseCase } from '../application/use_cases/create-{{
 import type { Create{{domain_name}} } from '../application/dtos/create-{{domain_file}}';
 
 export const useCreate{{domain_name}} = defineStore('CREATE_{{store_name}}',{
-      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
+      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["errors"]}=> {
         return {
           status:RequestStatus.INITIAL,
           message: null,
-          errors: ''
+          errors: {}
         }
       },
       getters: {

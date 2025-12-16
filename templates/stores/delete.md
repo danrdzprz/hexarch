@@ -6,11 +6,11 @@ import { Api{{domain_name}}Repository } from '../infrastructure/repositories/api
 import { Delete{{domain_name}}UseCase } from '../application/use_cases/delete-{{domain_file}}-use-case';
 
 export const useDelete{{domain_name}} = defineStore('DELETE_{{store_name}}',{
-      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["message"]}=> {
+      state: ():{status: RequestStatus, message:  ResponseSuccess['message'] | null, errors: ResponseFailure["errors"]}=> {
         return {
           status:RequestStatus.INITIAL,
           message: null,
-          errors: ''
+          errors: {}
         }
       },
       getters: {

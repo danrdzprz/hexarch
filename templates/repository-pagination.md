@@ -6,6 +6,7 @@ import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{
 import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
 import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
 import type { Update{{domain_name}} } from "../../application/dtos/update-{{domain_file}}";
+import type { Catalog } from "~/modules/shared/domain/entities/catalog";
 
 export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
@@ -21,6 +22,24 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 			});
 			if(response.ok){
 				resolve(await response.json() as PaginationCollection<{{domain_name}}>);
+			}else{
+				reject( await response.json() as ResponseFailure);
+			}
+		});
+	}
+
+	async function catalog(): Promise<Catalog[]> {
+		return new Promise(async (resolve, reject) => {
+			const response = await request(`api-url`,{
+				method: 'GET',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+					'Content-type': 'application/json; charset=UTF-8',
+				},
+			});
+			if(response.ok){
+				resolve(await response.json() as Catalog[]);
 			}else{
 				reject( await response.json() as ResponseFailure);
 			}
@@ -107,6 +126,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	return {
 		list,
+		catalog,
 		create,
 		update,
 		detail,

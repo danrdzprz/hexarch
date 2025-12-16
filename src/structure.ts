@@ -104,6 +104,16 @@ function applicationLayer(domain_name: string, use_cases_folder: string, baseDir
 
     console.log(`📄 List use case ${domain_name} created `);
 
+    const catalog_template = fs.readFileSync( path.join(__dirname, '../templates/case_uses/catalog-use-case.md'), 'utf-8');
+    fs.writeFileSync(path.join(baseDir, use_cases_folder, `catalog-${main_domain_folder}-use-case.ts`), fillTemplate({
+            domain_name: domain_name,
+            domain_file: main_domain_folder,
+            key_type: key_type,
+            key_name: key_name,
+        }, catalog_template)
+    );
+    console.log(`📄 Delete use case ${domain_name} created `);
+
     const delete_template = fs.readFileSync( path.join(__dirname, '../templates/case_uses/delete-use-case.md'), 'utf-8');
     fs.writeFileSync(path.join(baseDir, use_cases_folder, `delete-${main_domain_folder}-use-case.ts`), fillTemplate({
             domain_name: domain_name,
@@ -329,4 +339,15 @@ function stores(domain_name: string, store_folder: string, baseDir: string, key_
         );
     }
     console.log(`📄 Store to create ${domain_name} list`);
+
+    const catalog = fs.readFileSync( path.join(__dirname, '../templates/stores/catalog.md'), 'utf-8');
+    fs.writeFileSync(path.join(baseDir, store_folder, `catalog-${main_domain_folder}.ts`), fillTemplate({
+            domain_file: main_domain_folder,
+            domain_name: domain_name,
+            store_name: `${toUpperSnakeCase(domain_name)}`,
+            key_type: key_type,
+            key_name: key_name,
+        }, catalog)
+    );
+    console.log(`📄 Store to create ${domain_name} catalog`);
 }
