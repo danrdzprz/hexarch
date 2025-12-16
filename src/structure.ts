@@ -112,7 +112,7 @@ function applicationLayer(domain_name: string, use_cases_folder: string, baseDir
             key_name: key_name,
         }, catalog_template)
     );
-    console.log(`📄 Delete use case ${domain_name} created `);
+    console.log(`📄 Catalog use case ${domain_name} created `);
 
     const delete_template = fs.readFileSync( path.join(__dirname, '../templates/case_uses/delete-use-case.md'), 'utf-8');
     fs.writeFileSync(path.join(baseDir, use_cases_folder, `delete-${main_domain_folder}-use-case.ts`), fillTemplate({
@@ -195,6 +195,7 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
         {name:'request-status.ts' , url: '../templates/shared/domain/entities/request-status.md'},
         {name:'response-success.ts' , url: '../templates/shared/domain/entities/response-success.md'},
         {name:'response-failure.ts' , url: '../templates/shared/domain/entities/response-failure.md'},
+        {name:'catalog.ts' , url: '../templates/shared/domain/entities/catalog.md'},
     ];
         
     if(confirm_pagination){

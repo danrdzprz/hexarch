@@ -12,7 +12,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function list(data: PaginationOptions): Promise<PaginationCollection<{{domain_name}}>> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(`api-url${data}`,{
+			const response = await fetch(`/api/url?${data}`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -30,7 +30,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function catalog(): Promise<Catalog[]> {
 		return new Promise(async (resolve, reject) => {
-			const response = await request(`api-url`,{
+			const response = await request(`/api/url`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -48,7 +48,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function create( data: Create{{domain_name}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(`api-url`,{
+			const response = await fetch(`/api/url`,{
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
@@ -69,7 +69,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function detail( {{key_name}}: {{key_type}} ): Promise<{{domain_name}}> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(`api-url`,{
+			const response = await fetch(`/api/url/${{key_name}}`,{
 				method: 'GET',
 				headers: {
 					'Accept': 'application/json',
@@ -88,7 +88,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function update({{key_name}}: {{key_type}}, data: Update{{domain_name}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(`api-url`,{
+			const response = await fetch(`/api/url/${{key_name}}`,{
 				method: 'PUT',
 				headers: {
 					'Accept': 'application/json',
@@ -107,7 +107,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	async function destroy({{key_name}}: {{key_type}}): Promise<ResponseSuccess> {
 		return new Promise(async (resolve, reject) => {
-			const response = await fetch(`api-url`,{
+			const response = await fetch(`/api/url/${{key_name}}`,{
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',
