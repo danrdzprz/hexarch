@@ -25,8 +25,8 @@ export const createStructure = async (domain_name: string, parameters: Parameter
     const shared_domain_folder =  `shared/domain`;
     const shared_domain_dtos_folder =  `shared/application/dtos`;
     const shared_domain_entities_folder =  `shared/domain/entities`;
-    const store_folder =  `core/${main_domain_folder}/stores`;
-    const validations_folder =  `core/${main_domain_folder}/validations`;
+    const store_folder =  `${infrastructure_folder}/stores`;
+    const validations_folder =  `${infrastructure_folder}/validations`;
 
     const structure = [
         'core',
