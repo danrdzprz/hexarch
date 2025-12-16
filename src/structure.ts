@@ -162,27 +162,27 @@ function applicationLayer(domain_name: string, use_cases_folder: string, baseDir
     );
     console.log(`📄 Create Dto ${domain_name} created `);
 
-    // detail
-    const detail_dto = fs.readFileSync( path.join(__dirname, '../templates/dtos/detail-dto.md'), 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `detail-${main_domain_folder}.ts`), fillTemplate({
-            domain_name: domain_name,
-            domain_file: main_domain_folder,
-            key_type: key_type,
-            key_name: key_name,
-        }, detail_dto)
-    );
-    console.log(`📄 Detail Dto ${domain_name} created `);
+    // // detail
+    // const detail_dto = fs.readFileSync( path.join(__dirname, '../templates/dtos/detail-dto.md'), 'utf-8');
+    // fs.writeFileSync(path.join(baseDir, dtos_folder, `detail-${main_domain_folder}.ts`), fillTemplate({
+    //         domain_name: domain_name,
+    //         domain_file: main_domain_folder,
+    //         key_type: key_type,
+    //         key_name: key_name,
+    //     }, detail_dto)
+    // );
+    // console.log(`📄 Detail Dto ${domain_name} created `);
 
-    // list
-    const list_dto = fs.readFileSync( path.join(__dirname, '../templates/dtos/list-dto.md'), 'utf-8');
-    fs.writeFileSync(path.join(baseDir, dtos_folder, `list-${main_domain_folder}.ts`), fillTemplate({
-            domain_name: domain_name,
-            domain_file: main_domain_folder,
-            key_type: key_type,
-            key_name: key_name,
-        }, list_dto)
-    );
-    console.log(`📄 List Dto ${domain_name} created `);
+    // // list
+    // const list_dto = fs.readFileSync( path.join(__dirname, '../templates/dtos/list-dto.md'), 'utf-8');
+    // fs.writeFileSync(path.join(baseDir, dtos_folder, `list-${main_domain_folder}.ts`), fillTemplate({
+    //         domain_name: domain_name,
+    //         domain_file: main_domain_folder,
+    //         key_type: key_type,
+    //         key_name: key_name,
+    //     }, list_dto)
+    // );
+    // console.log(`📄 List Dto ${domain_name} created `);
 }
 
 
@@ -223,6 +223,27 @@ async function domainLayer(domain_name: string, parameters: ParametersEntity[], 
     fs.writeFileSync(path.join(baseDir, entities_folder, `${main_domain_folder}.ts`), entity_file);
     console.log(`📄 Entity ${domain_name} created `);
 
+    // detail
+    const detail_entity = fs.readFileSync( path.join(__dirname, '../templates/entities/detail.md'), 'utf-8');
+    fs.writeFileSync(path.join(baseDir, entities_folder, `detail-${main_domain_folder}.ts`), fillTemplate({
+            domain_name: domain_name,
+            domain_file: main_domain_folder,
+            key_type: key_type,
+            key_name: key_name,
+        }, detail_entity)
+    );
+    console.log(`📄 Detail Dto ${domain_name} created `);
+
+    // list
+    const list_entity = fs.readFileSync( path.join(__dirname, '../templates/entities/list.md'), 'utf-8');
+    fs.writeFileSync(path.join(baseDir, entities_folder, `list-${main_domain_folder}.ts`), fillTemplate({
+            domain_name: domain_name,
+            domain_file: main_domain_folder,
+            key_type: key_type,
+            key_name: key_name,
+        }, list_entity)
+    );
+    console.log(`📄 List Dto ${domain_name} created `);
     //create contracts
     if( confirm_pagination ){
         const contract_template = fs.readFileSync( path.join(__dirname, '../templates/repository-contract-pagination.md'), 'utf-8');

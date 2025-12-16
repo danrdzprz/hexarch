@@ -2,13 +2,15 @@ import type { ResponseFailure } from "~/modules/shared/domain/entities/response-
 import type { ResponseSuccess } from "~/modules/shared/domain/entities/response-success";
 import type { {{domain_name}}RepositoryContract } from "../../domain/contracts/{{domain_file}}-repository-contract";
 import type { {{domain_name}} } from "../../domain/entities/{{domain_file}}";
+import type { List{{domain_name}} } from "../../domain/entities/list-{{domain_file}}";
+import type { Detail{{domain_name}} } from "../../domain/entities/detail-{{domain_file}}";
 import type { Create{{domain_name}} } from "../../application/dtos/create-{{domain_file}}";
 import type { Update{{domain_name}} } from "../../application/dtos/update-{{domain_file}}";
 import type { Catalog } from "~/modules/shared/domain/entities/catalog";
 
 export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContract {
 
-	async function list(): Promise<{{domain_name}}[]> {
+	async function list(): Promise<List{{domain_name}}[]> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'GET',
@@ -65,7 +67,7 @@ export function Api{{domain_name}}Repository(): {{domain_name}}RepositoryContrac
 
 	
 
-	async function detail( {{key_name}}: {{key_type}} ): Promise<{{domain_name}}> {
+	async function detail( {{key_name}}: {{key_type}} ): Promise<Detail{{domain_name}}> {
 		return new Promise(async (resolve, reject) => {
 			const response = await fetch(`api-url`,{
 				method: 'GET',
