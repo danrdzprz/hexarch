@@ -1,6 +1,6 @@
 {
   "name": "@danrdzprz/hexarch",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Hexarch is an hexagonal architecture generator for vue.",
   "main": "dist/index.js",
   "bin": {
